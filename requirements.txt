@@ -1,0 +1,13 @@
+pymongo==4.0.1
+requests==2.28.2
+tldextract==2.2.2
+jsbeautifier==1.14.6
+matplotlib==3.5.1
+numpy==1.22.3
+adblockparser==0.7
+trackingprotection_tools==0.6.1
+publicsuffix2
+networkx==2.8.8
+pysha3==1.0.2
+mmh3==3.0.0
+lzstring==1.0.4
