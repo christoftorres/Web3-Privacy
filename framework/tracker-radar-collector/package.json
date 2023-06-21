@@ -1,0 +1,50 @@
+{
+  "name": "tracker-radar-collector",
+  "author": "DuckDuckGo",
+  "license": "Apache 2.0",
+  "version": "1.0.0",
+  "description": "Modular, multithreaded, puppeteer-based crawler.",
+  "main": "main.js",
+  "scripts": {
+    "crawl": "node ./cli/crawl-cli",
+    "test": "npm run lint && tsc && npm run unit",
+    "unit": "node ./tests/runTests.js && npm run mocha",
+    "mocha": "mocha ./tests/**/*.mocha.js",
+    "lint": "eslint *.js cli/ collectors/ helpers/ post-processing/ tests/ reporters/",
+    "lint-fix": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:duckduckgo/tracker-radar-crawler.git"
+  },
+  "pre-push": [
+    "test"
+  ],
+  "engines": {
+    "node": ">=12.22.4"
+  },
+  "devDependencies": {
+    "@types/async": "^2.4.1",
+    "@types/mocha": "^9.1.1",
+    "@types/mockery": "^1.4.30",
+    "@types/node": "^10.12.15",
+    "@types/progress": "^2.0.3",
+    "@types/stack-utils": "^1.0.1",
+    "eslint": "^7.2.0",
+    "eslint-plugin-mocha": "^10.0.5",
+    "mocha": "^10.0.0",
+    "mockery": "^2.1.0",
+    "pre-push": "^0.1.1",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@duckduckgo/autoconsent": "^2.2.0",
+    "async": "^2.6.1",
+    "chalk": "^2.4.1",
+    "clickhouse": "^2.6.0",
+    "commander": "^2.19.0",
+    "progress": "^2.0.3",
+    "puppeteer": "^10.2.0",
+    "tldts": "^4.0.3"
+  }
+}
