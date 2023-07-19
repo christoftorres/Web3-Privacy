@@ -15,13 +15,18 @@ A framework to quantify Web3 privacy violations such as Web3-based browser finge
 
 ``` shell
 brew tap mongodb/brew
-brew install mongodb-community@4.4
+brew update
+brew install mongodb-community@6.0
 ```
 
 ##### Linux
 
 ``` shell
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list && apt-get update && apt-get install -y mongodb-org
+sudo apt-get install gnupg curl
+curl -fsSL https://pgp.mongodb.com/server-6.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg --dearmor
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
 ```
 
 For other operating systems follow the installation instructions on [mongodb.com](https://docs.mongodb.com/manual/installation/).
