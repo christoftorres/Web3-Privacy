@@ -157,3 +157,65 @@ python3 find-leaks-and-scripts-dapps.py
 python3 find-leaks-and-scripts-wallet-extensions.py
 ```
 
+## Artifact Evaluation Experiments
+
+### E1
+
+This experiment takes around 5 human-minutes + 5 compute-minutes. The goal is to analyse the data that was gathered during our crawl on the top 100K websites in November 2022 and parsed via our browser fingerprinting detection script. Performing the entire crawl from scratch on the top 100K websites would take very long and result in different results as the web keeps on changing. Therefore, we provide a dump of our MongoDB collection which already contains the data processed by our fingerprint detection script. The dump can be imported to analyze our findings. However, for reproducibility purposes we also provide a raw snapshot of all the requests and JavaScript calls that were collected via our crawl in November 2022.
+        
+
+Download the browser fingerprinting datasets using:
+
+```
+wget https://zenodo.org/record/8071006/files/browser-fingerprinting-datasets.zip 
+unzip browser-fingerprinting-datasets.zip
+mv datasets browser-fingerprinting/
+rm browser-fingerprinting-datasets.zip
+```
+
+Download the browser fingerprinting results using:
+
+```
+wget https://zenodo.org/record/8071006/files/browser-fingerprinting-results.zip
+unzip browser-fingerprinting-results.zip
+mv results browser-fingerprinting/
+rm browser-fingerprinting-results.zip
+```
+
+Change the working directory using:
+
+```
+cd browser-fingerprinting/results
+```
+
+Import the MongoDB dump by first creating a temporary directory using:
+
+```
+mkdir db
+```
+
+Afterwards, run MongoDB locally using the temporary directory: 
+
+```
+mongod --dbpath db
+```
+
+Import the collection using:
+
+```
+mongoimport --uri="mongodb://localhost:27017/web3_privacy" --collection fingerprinting_results --type json --file fingerprinting_results.json
+```
+
+After having imported the MongoDB dump and making sure that MongoDB is running, we can run the analysis script by first chaining our working directory using:
+
+```
+cd browser-fingerprinting/analysis
+```
+
+and running the analysis script using:
+
+```
+python3 analyze_detected_fingerprinting.py
+```
+
+The terminal will display Tables 3, 4, 5, and 6, which should be equivalent to the tables included in the paper. Moreover, the script will also output in the same directory as the analysis script a PDF file named ```blocklists.pdf``` which should be equivalent to Figure 5 in the paper.
