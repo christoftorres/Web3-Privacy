@@ -42,7 +42,8 @@ python3 -m pip install -r requirements.txt
 ##### Linux
 
 ``` shell
-apt-get update -q && apt-get install -y wget curl unzip software-properties-common python3-distutils python3-pip python3-apt python3-dev
+sudo apt-get update -q
+sudo apt-get install -y software-properties-common python3-distutils python3-pip python3-apt python3-dev
 python3 -m pip install -r requirements.txt
 ```
 
@@ -52,8 +53,10 @@ python3 -m pip install -r requirements.txt
 
 ``` shell
 brew install node
-cd framework/tracker-radar-collector && npm install
-cd framework/request-interceptor && npm install
+cd framework/tracker-radar-collector
+npm install
+cd framework/request-interceptor
+npm install
 ```
 
 ##### Linux
@@ -61,8 +64,10 @@ cd framework/request-interceptor && npm install
 ``` shell
 curl -sL https://deb.nodesource.com/setup_18.x | bash -
 apt-get update -q && apt-get install -y nodejs
-cd framework/tracker-radar-collector && npm install
-cd framework/request-interceptor && npm install
+cd framework/tracker-radar-collector
+npm install
+cd framework/request-interceptor
+npm install
 ```
 
 For other operating systems follow the installation instructions on [nodejs.org](https://nodejs.org/en/download/package-manager/).
