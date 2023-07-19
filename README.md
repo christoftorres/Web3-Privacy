@@ -9,6 +9,8 @@ A framework to quantify Web3 privacy violations such as Web3-based browser finge
 
 ## Installation Instructions
 
+We tested our framework on an Apple MacBook Pro 2021 with an Apple M1 Pro ARM chip running MacOS Monterey and on a Linux machine running Ubuntu Linux 22.04.02 LTS with a 12th Gen Intel(R) Core(TM) i9-12900K CPU. We used Python 3.9 on both machines to run our Python scripts.
+
 ### 1. Install MongoDB
 
 ##### MacOS
