@@ -244,10 +244,14 @@ rm wallet-address-leakage-results.zip
 
 Change the working directory using:
 
-``cd wallet-address-leakage/analysis''.}
-    
-        \item[Execution:]
-        \textit{Run the comparison script using ``python3 find-leaks-and-scripts-winter-et-al.py ../results/whats\_in\_your\_wallet/crawl ../datasets/whats\_in\_your\_wallet''.}
-    
-        \item[Results:] \textit{The terminal will display at the end Table 7, which should be equivalent to Table 7 included in the paper.}
-    \end{asparadesc}
+```
+cd wallet-address-leakage/analysis
+```
+
+Run the comparison script using:
+
+```
+python3 find-leaks-and-scripts-winter-et-al.py ../results/whats_in_your_wallet/crawl ../datasets/whats_in_your_wallet
+```
+
+The terminal will display at the end Table 7, which should be equivalent to Table 7 included in the paper.
