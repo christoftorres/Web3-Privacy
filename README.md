@@ -219,3 +219,35 @@ python3 analyze_detected_fingerprinting.py
 ```
 
 The terminal will display Tables 3, 4, 5, and 6, which should be equivalent to the tables included in the paper. Moreover, the script will also output in the same directory as the analysis script a PDF file named ```blocklists.pdf``` which should be equivalent to Figure 5 in the paper.
+
+### E2
+
+This experiment takes 5 human-minutes + 5 compute-minutes. The goal is to analyze the requests collected via our interceptor on the 66 DApps by Winter et al. and compare them to the results of Winter et al. Performing the entire crawl from scratch on 66 websites would take very long and result in different results as the web keeps on changing. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
+
+Download the wallet address leakage datasets using:
+
+```
+wget https://zenodo.org/record/8071006/files/wallet-address-leakage-datasets.zip 
+unzip wallet-address-leakage-datasets.zip
+mv datasets wallet-address-leakage/
+rm wallet-address-leakage-datasets.zip
+```
+
+Download the wallet address leakage results using:
+
+```
+wget https://zenodo.org/record/8071006/files/wallet-address-leakage-results.zip
+unzip wallet-address-leakage-results.zip
+mv results wallet-address-leakage/
+rm wallet-address-leakage-results.zip
+```
+
+Change the working directory using:
+
+``cd wallet-address-leakage/analysis''.}
+    
+        \item[Execution:]
+        \textit{Run the comparison script using ``python3 find-leaks-and-scripts-winter-et-al.py ../results/whats\_in\_your\_wallet/crawl ../datasets/whats\_in\_your\_wallet''.}
+    
+        \item[Results:] \textit{The terminal will display at the end Table 7, which should be equivalent to Table 7 included in the paper.}
+    \end{asparadesc}
