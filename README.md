@@ -65,7 +65,8 @@ npm install
 
 ``` shell
 curl -sL https://deb.nodesource.com/setup_18.x | bash -
-apt-get update -q && apt-get install -y nodejs
+sudo apt-get update -q
+sudo apt-get install -y nodejs
 cd framework/tracker-radar-collector
 npm install
 cd framework/request-interceptor
