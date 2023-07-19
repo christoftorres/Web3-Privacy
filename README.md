@@ -273,3 +273,23 @@ python3 find-leaks-and-scripts-dapps.py
 ```
 
 The terminal will display at the end Tables 8 and 9, which should be equivalent to Tables 8 and 9 included in the paper.
+
+### E4
+
+This experiment takes 5 human-minutes + 5 compute-minutes. The goal is to analyze the requests collected via our interceptor on 100 popular wallet extensions.
+    
+Performing the entire crawl from scratch on the wallet extensions dataset would take very long as it requires a large amount of manual interaction with each wallet extension. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
+            
+Change the working directory using: 
+
+```
+cd wallet-address-leakage/analysis
+```
+
+Run the analysis script using: 
+
+```
+python3 find-leaks-and-scripts-wallet-extensions.py
+```
+
+The terminal will display at the end Table 10, which should be equivalent to Table 10 included in the paper.
