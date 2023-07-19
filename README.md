@@ -255,3 +255,21 @@ python3 find-leaks-and-scripts-winter-et-al.py ../results/whats_in_your_wallet/c
 ```
 
 The terminal will display at the end Table 7, which should be equivalent to Table 7 included in the paper.
+
+### E3
+
+This experiment takes 5 human-minutes + 60 compute-minutes. The goal is to analyze the requests collected via our interceptor on the DAppRadar.com dataset. Performing the entire crawl from scratch on DAppRadar.com dataset would take very long and result in different results as the web keeps on changing. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
+
+Change the working directory using:
+
+```
+cd wallet-address-leakage/analysis
+```
+
+Run the analysis script using: 
+
+```
+python3 find-leaks-and-scripts-dapps.py
+```
+
+The terminal will display at the end Tables 8 and 9, which should be equivalent to Tables 8 and 9 included in the paper.
