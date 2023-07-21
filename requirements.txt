@@ -11,3 +11,4 @@ networkx==2.8.8
 pysha3==1.0.2
 mmh3==3.0.0
 lzstring==1.0.4
+base58==2.1.1

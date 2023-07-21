@@ -1,0 +1,24 @@
+{
+    "6f52843a100f6a5f6c0f65e3a99351d5221f815b6eafdb644b5a0f20edc8ad7f": {
+        "third_parties": [
+            "6347032d45.com",
+            "wpadmngr.com",
+            "ba0182aa75.com"
+        ],
+        "third_party_scripts": [
+            "https://1916572bb8.6347032d45.com/08aeb09734cc8f04d42b0558b114fb5f.js",
+            "https://932d007132.ba0182aa75.com/1511a82de1dab2ee0c95006298aa98af.js",
+            "https://js.wpadmngr.com/static/adManager.m.js"
+        ]
+    },
+    "9341be1a630eca89fbb46929d6f6da5e45145dbdcaeee6466f1b4499d0b2b369": {
+        "third_parties": [
+            "jsdelivr.net",
+            "unpkg.com"
+        ],
+        "third_party_scripts": [
+            "https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js",
+            "https://unpkg.com/web3@latest/dist/web3.min.js"
+        ]
+    }
+}
