@@ -9,19 +9,26 @@ A framework to quantify Web3 privacy violations such as Web3-based browser finge
 
 ## Installation Instructions
 
+We tested our framework on an Apple MacBook Pro 2021 with an Apple M1 Pro ARM chip running MacOS Monterey and on a Linux machine running Ubuntu Linux 22.04.02 LTS with a 12th Gen Intel(R) Core(TM) i9-12900K CPU. We used Python 3.9 on both machines to run our Python scripts.
+
 ### 1. Install MongoDB
 
 ##### MacOS
 
 ``` shell
 brew tap mongodb/brew
-brew install mongodb-community@4.4
+brew update
+brew install mongodb-community@6.0
 ```
 
 ##### Linux
 
 ``` shell
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list && apt-get update && apt-get install -y mongodb-org
+sudo apt-get install gnupg curl
+curl -fsSL https://pgp.mongodb.com/server-6.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg --dearmor
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
 ```
 
 For other operating systems follow the installation instructions on [mongodb.com](https://docs.mongodb.com/manual/installation/).
@@ -37,7 +44,8 @@ python3 -m pip install -r requirements.txt
 ##### Linux
 
 ``` shell
-apt-get update -q && apt-get install -y wget curl unzip software-properties-common python3-distutils python3-pip python3-apt python3-dev
+sudo apt-get update -q
+sudo apt-get install -y software-properties-common python3-distutils python3-pip python3-apt python3-dev
 python3 -m pip install -r requirements.txt
 ```
 
@@ -47,17 +55,22 @@ python3 -m pip install -r requirements.txt
 
 ``` shell
 brew install node
-cd framework/tracker-radar-collector && npm install
-cd framework/request-interceptor && npm install
+cd framework/tracker-radar-collector
+npm install
+cd framework/request-interceptor
+npm install
 ```
 
 ##### Linux
 
 ``` shell
 curl -sL https://deb.nodesource.com/setup_18.x | bash -
-apt-get update -q && apt-get install -y nodejs
-cd framework/tracker-radar-collector && npm install
-cd framework/request-interceptor && npm install
+sudo apt-get update -q
+sudo apt-get install -y nodejs
+cd framework/tracker-radar-collector
+npm install
+cd framework/request-interceptor
+npm install
 ```
 
 For other operating systems follow the installation instructions on [nodejs.org](https://nodejs.org/en/download/package-manager/).
@@ -145,3 +158,139 @@ python3 find-leaks-and-scripts-dapps.py
 python3 find-leaks-and-scripts-wallet-extensions.py
 ```
 
+## Artifact Evaluation Experiments
+
+### E1
+
+This experiment takes around 5 human-minutes + 5 compute-minutes. The goal is to analyse the data that was gathered during our crawl on the top 100K websites in November 2022 and parsed via our browser fingerprinting detection script. Performing the entire crawl from scratch on the top 100K websites would take very long and result in different results as the web keeps on changing. Therefore, we provide a dump of our MongoDB collection which already contains the data processed by our fingerprint detection script. The dump can be imported to analyze our findings. However, for reproducibility purposes we also provide a raw snapshot of all the requests and JavaScript calls that were collected via our crawl in November 2022.
+        
+
+Download the browser fingerprinting datasets using:
+
+```
+wget https://zenodo.org/record/8071006/files/browser-fingerprinting-datasets.zip 
+unzip browser-fingerprinting-datasets.zip
+mv datasets browser-fingerprinting/
+rm browser-fingerprinting-datasets.zip
+```
+
+Download the browser fingerprinting results using:
+
+```
+wget https://zenodo.org/record/8071006/files/browser-fingerprinting-results.zip
+unzip browser-fingerprinting-results.zip
+mv results browser-fingerprinting/
+rm browser-fingerprinting-results.zip
+```
+
+Change the working directory using:
+
+```
+cd browser-fingerprinting/results
+```
+
+Import the MongoDB dump by first creating a temporary directory using:
+
+```
+mkdir db
+```
+
+Afterwards, run MongoDB locally using the temporary directory: 
+
+```
+mongod --dbpath db
+```
+
+Import the collection using:
+
+```
+mongoimport --uri="mongodb://localhost:27017/web3_privacy" --collection fingerprinting_results --type json --file fingerprinting_results.json
+```
+
+After having imported the MongoDB dump and making sure that MongoDB is running, we can run the analysis script by first chaining our working directory using:
+
+```
+cd browser-fingerprinting/analysis
+```
+
+and running the analysis script using:
+
+```
+python3 analyze_detected_fingerprinting.py
+```
+
+The terminal will display Tables 3, 4, 5, and 6, which should be equivalent to the tables included in the paper. Moreover, the script will also output in the same directory as the analysis script a PDF file named ```blocklists.pdf``` which should be equivalent to Figure 5 in the paper.
+
+### E2
+
+This experiment takes 5 human-minutes + 5 compute-minutes. The goal is to analyze the requests collected via our interceptor on the 66 DApps by Winter et al. and compare them to the results of Winter et al. Performing the entire crawl from scratch on 66 websites would take very long and result in different results as the web keeps on changing. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
+
+Download the wallet address leakage datasets using:
+
+```
+wget https://zenodo.org/record/8071006/files/wallet-address-leakage-datasets.zip 
+unzip wallet-address-leakage-datasets.zip
+mv datasets wallet-address-leakage/
+rm wallet-address-leakage-datasets.zip
+```
+
+Download the wallet address leakage results using:
+
+```
+wget https://zenodo.org/record/8071006/files/wallet-address-leakage-results.zip
+unzip wallet-address-leakage-results.zip
+mv results wallet-address-leakage/
+rm wallet-address-leakage-results.zip
+```
+
+Change the working directory using:
+
+```
+cd wallet-address-leakage/analysis
+```
+
+Run the comparison script using:
+
+```
+python3 find-leaks-and-scripts-winter-et-al.py ../results/whats_in_your_wallet/crawl ../datasets/whats_in_your_wallet
+```
+
+The terminal will display at the end Table 7, which should be equivalent to Table 7 included in the paper.
+
+### E3
+
+This experiment takes 5 human-minutes + 60 compute-minutes. The goal is to analyze the requests collected via our interceptor on the DAppRadar.com dataset. Performing the entire crawl from scratch on DAppRadar.com dataset would take very long and result in different results as the web keeps on changing. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
+
+Change the working directory using:
+
+```
+cd wallet-address-leakage/analysis
+```
+
+Run the analysis script using: 
+
+```
+python3 find-leaks-and-scripts-dapps.py
+```
+
+The terminal will display at the end Tables 8 and 9, which should be equivalent to Tables 8 and 9 included in the paper.
+
+### E4
+
+This experiment takes 5 human-minutes + 5 compute-minutes. The goal is to analyze the requests collected via our interceptor on 100 popular wallet extensions.
+    
+Performing the entire crawl from scratch on the wallet extensions dataset would take very long as it requires a large amount of manual interaction with each wallet extension. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
+            
+Change the working directory using: 
+
+```
+cd wallet-address-leakage/analysis
+```
+
+Run the analysis script using: 
+
+```
+python3 find-leaks-and-scripts-wallet-extensions.py
+```
+
+The terminal will display at the end Table 10, which should be equivalent to Table 10 included in the paper.
