@@ -221,6 +221,8 @@ python3 analyze_detected_fingerprinting.py
 
 The terminal will display Tables 3, 4, 5, and 6, which should be equivalent to the tables included in the paper. Moreover, the script will also output in the same directory as the analysis script a PDF file named ```blocklists.pdf``` which should be equivalent to Figure 5 in the paper.
 
+Please note, in order to be able to plot the file ```blocklists.pdf``` you are required to have LaTeX installed on your system.
+
 ### E2
 
 This experiment takes 5 human-minutes + 5 compute-minutes. The goal is to analyze the requests collected via our interceptor on the 66 DApps by Winter et al. and compare them to the results of Winter et al. Performing the entire crawl from scratch on 66 websites would take very long and result in different results as the web keeps on changing. Therefore, we provide a snapshot of all the requests that we intercepted during our crawl.
